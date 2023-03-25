@@ -1,5 +1,4 @@
 const Repair = require("../models/reapir.model")
-//const User = require("../models/users.model")
 
 exports.allRepair = async (req, res) => {
     const repairs = await Repair.findAll({
@@ -28,12 +27,12 @@ exports.repairUpDate = (req, res) => {
 }
 
 exports.createRepair = async (req, res) => {
+   try {
     const {date, userId} = req.body;
-    //const {id} = User;
-
+    
     const repair = await Repair.create({
         date,
-        userId,//: id 
+        userId,
     });
 
     res.status(201).json({
@@ -41,6 +40,13 @@ exports.createRepair = async (req, res) => {
         message: "The repair has been created!",
         repair
     })
+    
+   } catch (error) {
+    return res.status(500).json({
+        status: "fail",
+        error
+    })
+   }
 }
 
 exports.deleteRepair = (req, res) => {
