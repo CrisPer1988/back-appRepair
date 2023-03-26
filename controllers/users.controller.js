@@ -32,6 +32,7 @@ exports.userById = async (req, res) => {
   }
 
   res.status(200).json({
+    status: "success",
     message: 'The query has been done success',
     user,
   });

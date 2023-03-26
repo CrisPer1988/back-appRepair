@@ -4,30 +4,68 @@ exports.allRepair = async (req, res) => {
     const repairs = await Repair.findAll({
         where: {
             status: "pending"
-        }
+        },
     });
+  
 
     res.status(200).json({
         message: "The query has been done successs",
         results: repairs.length,
-        repairs
+        repairs,
     })
 }
 
-exports.repairById = (req, res) => {
-    res.json({
-        message: "reparaciones por id"
+exports.repairById = async (req, res) => {
+    const {id} = req.params;
+
+    const repair = await Repair.findOne({
+        where: {
+            id,
+            status: "pending"
+        }
+    });
+
+    if (!repair) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'the repair not found',
+        });
+      }
+
+    res.status(200).json({
+        status: "success",
+        message: "The query has been done success",
+        repair
     })
 }
 
-exports.repairUpDate = (req, res) => {
+exports.repairUpDate = async (req, res) => {
+    const {id} = req.params;
+
+    const repair = await Repair.findOne({
+        where: {
+            id,
+            status: "pending"
+        }
+    })
+
+    if (!repair) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'the user not found',
+        });
+      }
+
+      await repair.update({
+        status: "completed"
+      })
+
     res.json({
-        message: "actualizando reparacion"
+        message: "The repair has been update"
     })
 }
 
 exports.createRepair = async (req, res) => {
-   try {
     const {date, userId} = req.body;
     
     const repair = await Repair.create({
@@ -40,19 +78,32 @@ exports.createRepair = async (req, res) => {
         message: "The repair has been created!",
         repair
     })
-    
-   } catch (error) {
-    return res.status(500).json({
-        status: "fail",
-        error
-    })
    }
-}
 
-exports.deleteRepair = (req, res) => {
+
+exports.deleteRepair = async (req, res) => {
+    const {id} = req.params;
+
+    const repair = await Repair.findOne({
+        where: {
+            id,
+            status: "pending"
+        }
+    })
+
+    if (!repair) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'the user not found',
+        });
+      }
+
+      await repair.update({
+        status: "cancelled"
+      })
+
     res.json({
-        message: "The repair has been created!",
-       
+        message: "The repair has been update"
     })
 }
 
