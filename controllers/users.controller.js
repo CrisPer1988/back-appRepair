@@ -3,7 +3,7 @@ const User = require('../models/users.model');
 exports.findAll = async (req, res) => {
   const users = await User.findAll({
     where: {
-      status: 'available',
+      status: 'available'
     },
   });
 
