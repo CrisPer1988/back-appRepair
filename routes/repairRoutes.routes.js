@@ -1,18 +1,18 @@
-const express = require("express")
+const express = require('express');
 
-const repairController = require("../controllers/repair.controller")
+const repairController = require('../controllers/repair.controller');
 
-const routerRepair = express.Router()
-
-routerRepair
-.route("/")
-.get(repairController.allRepair)
-.post(repairController.createRepair)
+const routerRepair = express.Router();
 
 routerRepair
-.route("/:id")
-.get(repairController.repairById)
-.patch(repairController.repairUpDate)
-.delete(repairController.deleteRepair)
+  .route('/')
+  .get(repairController.allRepair)
+  .post(repairController.createRepair);
 
-module.exports = routerRepair
+routerRepair
+  .route('/:id')
+  .get(repairController.repairById)
+  .patch(repairController.repairUpDate)
+  .delete(repairController.deleteRepair);
+
+module.exports = routerRepair;

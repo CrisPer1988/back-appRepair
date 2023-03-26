@@ -3,7 +3,7 @@ const User = require('../models/users.model');
 exports.findAll = async (req, res) => {
   const users = await User.findAll({
     where: {
-      status: 'available'
+      status: 'available',
     },
   });
 
@@ -32,7 +32,7 @@ exports.userById = async (req, res) => {
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     message: 'The query has been done success',
     user,
   });

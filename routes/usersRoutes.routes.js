@@ -1,19 +1,18 @@
-const express = require("express")
+const express = require('express');
 
-const userController = require("../controllers/users.controller")
+const userController = require('../controllers/users.controller');
 
-const routerUser = express.Router()
-
-routerUser
-.route("/")
-.get(userController.findAll)
-.post(userController.createUser)
+const routerUser = express.Router();
 
 routerUser
-.route("/:id")
-.get(userController.userById)
-.patch(userController.upDateUser)
-.delete(userController.deleteUser)
+  .route('/')
+  .get(userController.findAll)
+  .post(userController.createUser);
 
-module.exports = routerUser
+routerUser
+  .route('/:id')
+  .get(userController.userById)
+  .patch(userController.upDateUser)
+  .delete(userController.deleteUser);
 
+module.exports = routerUser;
