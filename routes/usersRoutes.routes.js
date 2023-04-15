@@ -30,4 +30,7 @@ routerUser
     userController.deleteUser
   );
 
+  routerUser
+  .post("/login", validExistUser.validExistUser)
+
 module.exports = routerUser;
