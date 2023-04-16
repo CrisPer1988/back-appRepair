@@ -6,6 +6,12 @@ const handleCastError22P02 = () =>
     400
   );
 
+const handleEmailError = () =>
+  new AppError(
+    'Email is already in use, change it please!',
+    400
+  );
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -48,6 +54,10 @@ const globalErrorHandler = (
     console.log(error);
     if (error.parent?.code === '22P02')
       error = handleCastError22P02();
+
+    if (error.parent?.code === '23505') {
+      error = handleEmailError();
+    }
 
     sendErrorProd(error, res);
   }

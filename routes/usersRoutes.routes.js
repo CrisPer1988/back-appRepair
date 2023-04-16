@@ -3,16 +3,25 @@ const express = require('express');
 const userController = require('../controllers/users.controller');
 const validExistUser = require('../middlewares/user.middleware');
 const validFieldUser = require('../middlewares/validationUser.middleware');
+const authMiddleware = require("../middlewares/auth.middleware")
 
 const routerUser = express.Router();
 
 routerUser
+.post("/",
+  validFieldUser.createUserValidation,
+  userController.createUser)
+
+routerUser
+.post("/login", 
+userController.loginUser)
+
+routerUser.use(authMiddleware.protect)
+
+routerUser
   .route('/')
   .get(userController.findAll)
-  .post(
-    validFieldUser.createUserValidation,
-    userController.createUser
-  );
+  
 
 routerUser
   .route('/:id')
@@ -22,15 +31,14 @@ routerUser
   )
   .patch(
     validExistUser.validExistUser,
+    authMiddleware.protectAccountOwner,
     validFieldUser.updateUser,
     userController.upDateUser
   )
   .delete(
     validExistUser.validExistUser,
+    authMiddleware.protectAccountOwner,
     userController.deleteUser
   );
-
-  routerUser
-  .post("/login", validExistUser.validExistUser)
 
 module.exports = routerUser;

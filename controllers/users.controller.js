@@ -5,21 +5,35 @@ const generateJWT = require('../utils/jwt');
 const AppError = require('../utils/appError');
 
 exports.loginUser = catchAsync(async(req, res) => {
-  const {email, password} = req.body
+  const {email, password} = req.body 
 
-  const user = await User.findOne({
+   const user = await User.findOne({
     where: {
-      id: user.id,
+      email: email.toLowerCase(),
       status: "available"
     }
   })
 
+  if(!user) {
+    return next(new AppError("The user could not be found", 404))
+  }
+
+  if(!(await bcrypt.compare(password, user.password))){
+    return next(new AppError("Incorrect email or password", 401))
+  }
+
+  const token = await generateJWT(user.id)
+
   res.status(200).json({
     status: "success",
-    message: "User login"
+    token,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role
+    }
   })
-
-
 })
 
 exports.findAll = catchAsync(async (req, res) => {
