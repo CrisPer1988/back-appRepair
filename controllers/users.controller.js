@@ -75,7 +75,12 @@ exports.userById = catchAsync(
     res.status(200).json({
       status: 'success',
       message: 'The query has been done success',
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      },
     });
   }
 );
