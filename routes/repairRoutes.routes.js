@@ -3,12 +3,14 @@ const express = require('express');
 const repairController = require('../controllers/repair.controller');
 const validExistRepair = require('../middlewares/repair.middleware');
 const validFieldRepair = require('../middlewares/validationRepair.middleware');
-const authMiddleware = require("../middlewares/auth.middleware");
+const authMiddleware = require('../middlewares/auth.middleware');
 
 const routerRepair = express.Router();
 
-routerRepair.use(authMiddleware.protect)
-routerRepair.use(authMiddleware.restrictTo("employee"))
+routerRepair.use(authMiddleware.protect);
+routerRepair.use(
+  authMiddleware.restrictTo('employee')
+);
 
 routerRepair
   .route('/')

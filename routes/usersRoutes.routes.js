@@ -3,25 +3,24 @@ const express = require('express');
 const userController = require('../controllers/users.controller');
 const validExistUser = require('../middlewares/user.middleware');
 const validFieldUser = require('../middlewares/validationUser.middleware');
-const authMiddleware = require("../middlewares/auth.middleware")
+const authMiddleware = require('../middlewares/auth.middleware');
 
 const routerUser = express.Router();
 
-routerUser
-.post("/",
+routerUser.post(
+  '/',
   validFieldUser.createUserValidation,
-  userController.createUser)
+  userController.createUser
+);
 
-routerUser
-.post("/login", 
-userController.loginUser)
+routerUser.post(
+  '/login',
+  userController.loginUser
+);
 
-routerUser.use(authMiddleware.protect)
+routerUser.use(authMiddleware.protect);
 
-routerUser
-  .route('/')
-  .get(userController.findAll)
-  
+routerUser.route('/').get(userController.findAll);
 
 routerUser
   .route('/:id')
