@@ -6,7 +6,7 @@ exports.allRepair = catchAsync(
   async (req, res) => {
     const repairs = await Repair.findAll({
       where: {
-        status: 'pending',
+        status: ['pending', "completed"],
       },
       include: [
         {
@@ -54,7 +54,6 @@ exports.repairUpDate = catchAsync(
 
 exports.createRepair = catchAsync(
   async (req, res) => {
-    //const { sessionUser } = req;
     const { date, description, motorsNumber, userId } =
       req.body;
 
