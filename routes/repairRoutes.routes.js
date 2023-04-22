@@ -23,7 +23,7 @@ routerRepair
 routerRepair
   .route('/:id')
   .get(
-    validExistRepair.validExistRepair,
+    validExistRepair.validExistRepairById,
     repairController.repairById
   )
   .patch(
